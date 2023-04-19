@@ -8,7 +8,23 @@
 <body>
 
 <main layout:fragment="main-content">
-    <h1>From sub layout</h1>
+
+    <!-- welcome ~ start -->
+    <div th:replace="~{fragments/welcome}"></div>
+    <!-- welcome ~ end -->
+
+    <!-- card ~ start -->
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <div class="col" th:each="article : ${articles}" th:object="${article}">
+                    <div th:replace="~{fragments/card :: card-readonly(*{uuid}, *{title}, *{thumbnail}, *{author})}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- card ~ end -->
+
 </main>
 
 </body>

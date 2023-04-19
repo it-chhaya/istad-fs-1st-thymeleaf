@@ -1,0 +1,33 @@
+<section xmlns:th="http://www.thymeleaf.org">
+  <!-- card readonly ~ start -->
+  <a th:fragment="card-readonly(uuid, title, thumbnail, author)"
+     th:href="@{/article/{uuid}(uuid=${uuid})}" class="text-decoration-none">
+    <div class="card shadow-sm">
+      <img th:src="@{/resources/img/default/{thumbnail}(thumbnail=${thumbnail})}" alt="News Coffee" class="bd-placeholder-img card-img-top">
+      <div class="card-body">
+        <p th:text="${title}" class="card-text"></p>
+        <div class="d-flex justify-content-between align-items-center">
+          <small th:text="${author}" class="text-body-secondary"></small>
+        </div>
+      </div>
+    </div>
+  </a>
+  <!-- card readonly ~ end -->
+
+  <!-- card action ~ start -->
+  <div th:fragment="card-action(uuid, title, thumbnail, author)" class="card shadow-sm">
+    <img th:src="@{http://localhost:8080/files/{thumbnail}(thumbnail=${thumbnail})}" alt="News Coffee" class="bd-placeholder-img card-img-top">
+    <div class="card-body">
+      <p th:text="${title}" class="card-text"></p>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="btn-group">
+          <a href="#" type="button" class="btn btn-sm btn-outline-success">View</a>
+          <a href="#" type="button" class="btn btn-sm btn-outline-primary">Edit</a>
+          <a href="#" type="button" class="btn btn-sm btn-outline-danger">Delete</a>
+        </div>
+        <small th:text="${author}" class="text-body-secondary"></small>
+      </div>
+    </div>
+  </div>
+  <!-- card action ~ end -->
+</section>

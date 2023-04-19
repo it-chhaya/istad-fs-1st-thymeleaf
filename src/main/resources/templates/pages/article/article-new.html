@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/master-layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<main layout:fragment="main-content">
+    <div class="container mt-3">
+        <h1>Create new article</h1>
+        <form th:action="@{/article/new}" method="post" th:object="${article}" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label class="form-label" for="title">Title</label>
+                        <input th:field="*{title}" class="form-control" id="title" type="text">
+                        <div class="form-text text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="author">Author</label>
+                        <input th:field="*{author}" class="form-control" id="author" type="text">
+                        <div class="form-text text-danger" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Save</button>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="thumbnailFile" class="form-label">Thumbnail</label>
+                        <input class="form-control" type="file" id="thumbnailFile" name="thumbnailFile">
+                        <img class="w-75 mt-2" id="placeholder" th:src="@{/resources/img/default/placeholder.jpg}" alt="your image" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+<th:block layout:fragment="subScript">
+    <script th:inline="javascript">
+
+    </script>
+    <script>
+        $(function() {
+            const thumbnailFile = $('#thumbnailFile')
+            const placeholder = $('#placeholder')
+            thumbnailFile.onchange = (evt) => {
+                const [file] = thumbnailFile.files
+                if (file) {
+                    placeholder.src = URL.createObjectURL(file)
+                }
+            }
+        })
+    </script>
+</th:block>
+
+</body>
+</html>
