@@ -29,9 +29,9 @@ public class StaticRepository {
         articles = new ArrayList<>() {{
             for (int i = 0; i < 20; i++) {
                 if (i % 2 == 0) {
-                    add(new Article(UUID.randomUUID(), faker.book().title(), "01.jpg", faker.book().author()));
+                    add(new Article(UUID.randomUUID().toString(), faker.book().title(), "01.jpg", faker.book().author()));
                 } else {
-                    add(new Article(UUID.randomUUID(), faker.book().title(), "02.jpg", faker.book().author()));
+                    add(new Article(UUID.randomUUID().toString(), faker.book().title(), "02.jpg", faker.book().author()));
                 }
             }
         }};

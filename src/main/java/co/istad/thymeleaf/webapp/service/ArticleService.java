@@ -9,5 +9,7 @@ public interface ArticleService {
     // Find all articles
     // POJO
     List<Article> findAll();
+
+    Article findByUuid(String uuid);
     boolean save(Article article, MultipartFile file);
 }

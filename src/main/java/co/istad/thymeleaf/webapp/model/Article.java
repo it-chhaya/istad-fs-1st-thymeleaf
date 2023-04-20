@@ -12,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Article {
 
-    private UUID uuid;
+    private String uuid;
 
     @NotBlank(message = "Title is required..!")
     private String title;

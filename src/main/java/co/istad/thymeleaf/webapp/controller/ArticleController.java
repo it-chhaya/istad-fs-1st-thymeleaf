@@ -52,4 +52,11 @@ public class ArticleController {
 
         return "pages/article/article-new";
     }
+
+    @GetMapping("/{uuid}")
+    String viewArticleDetail(@PathVariable("uuid") String uuid, Model model) {
+        Article article = articleService.findByUuid(uuid);
+        model.addAttribute("article", article);
+        return "pages/article/article-detail";
+    }
 }

@@ -3,7 +3,7 @@
   <a th:fragment="card-readonly(uuid, title, thumbnail, author)"
      th:href="@{/article/{uuid}(uuid=${uuid})}" class="text-decoration-none">
     <div class="card shadow-sm">
-      <img th:src="@{/resources/img/default/{thumbnail}(thumbnail=${thumbnail})}" alt="News Coffee" class="bd-placeholder-img card-img-top">
+      <img th:src="@{http://localhost:8080/files/{thumbnail}(thumbnail=${thumbnail})}" alt="News Coffee" class="bd-placeholder-img card-img-top">
       <div class="card-body">
         <p th:text="${title}" class="card-text"></p>
         <div class="d-flex justify-content-between align-items-center">
