@@ -14,7 +14,7 @@ public interface ArticleRepository {
             VALUES (#{a.uuid}, #{a.title}, #{a.thumbnail}, #{a.author})
             """)
     void insert(@Param("a") Article article);
-    @Select("SELECT * FROM articles ORDER BY title DESC")
+    @Select("SELECT * FROM articles ORDER BY id DESC")
     List<Article> select();
 
     @Select("SELECT * FROM article WHERE uuid = #{uuid}")

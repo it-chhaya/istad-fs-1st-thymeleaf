@@ -7,7 +7,11 @@ import co.istad.thymeleaf.webapp.repository.StaticRepository;
 import co.istad.thymeleaf.webapp.service.ArticleService;
 import co.istad.thymeleaf.webapp.service.FileUploadService;
 import lombok.RequiredArgsConstructor;
+import org.jooq.DSLContext;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -15,11 +19,13 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(propagation = Propagation.REQUIRES_NEW)
 public class ArticleServiceImpl implements ArticleService {
 
     private final StaticRepository staticRepository;
     private final ArticleRepository articleRepository;
     private final FileUploadService fileUploadService;
+    private final DSLContext dslContext;
 
     @Override
     public List<Article> findAll() {
@@ -27,7 +33,6 @@ public class ArticleServiceImpl implements ArticleService {
         // Your logic
         // return staticRepository.getArticles();
         List<Article> articles = articleRepository.select();
-        System.out.println(articles);
         return articles;
     }
 
@@ -39,13 +44,26 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public boolean save(Article article, MultipartFile file) {
+
         FileUpload fileUpload = fileUploadService.uploadSingle(file);
+
         if (fileUpload.isSucceed()) {
-            article.setUuid(UUID.randomUUID().toString());
-            article.setThumbnail(fileUpload.fileName());
-            // staticRepository.getArticles().add(0, article);
-            articleRepository.insert(article);
+            for (int i = 0; i < 3; i++) {
+                article.setUuid(UUID.randomUUID().toString());
+                article.setThumbnail(fileUpload.fileName());
+
+                // Demo static repository:
+                // staticRepository.getArticles().add(0, article);
+
+                articleRepository.insert(article);
+
+                // Test making error insert if i equals 3:
+                if (i == 2) {
+                    articleRepository.insert(article);
+                }
+            }
         }
+
         return true;
     }
 }
